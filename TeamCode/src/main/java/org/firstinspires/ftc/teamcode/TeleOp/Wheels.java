@@ -115,7 +115,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeleOp Control", group="Teleop")
+@TeleOp(name="good_wheels", group="Teleop")
 public class Wheels extends OpMode {
     // Declare OpMode members
     private ElapsedTime runtime = new ElapsedTime();
@@ -127,10 +127,7 @@ public class Wheels extends OpMode {
     private DcMotor rightBackDrive = null;
 
     // End-effector members
-    private CRServo intake = null;
-    private DcMotor extension = null;
-    private DcMotor pivot = null;
-    private DcMotor pivot2 = null;
+
 
     // Constants
     private static final double INTAKE_IN_POWER = 1.0;
@@ -157,10 +154,7 @@ public class Wheels extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
 
-        intake = hardwareMap.get(CRServo.class, "intake");
-        extension = hardwareMap.get(DcMotor.class, "extension");
-        pivot = hardwareMap.get(DcMotor.class, "pivot");
-        pivot2 = hardwareMap.get(DcMotor.class, "pivot2");
+
 
         // Set motor directions
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -168,15 +162,10 @@ public class Wheels extends OpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        intake.setDirection(CRServo.Direction.FORWARD);
-        extension.setDirection(DcMotor.Direction.REVERSE);
-        pivot.setDirection(DcMotor.Direction.REVERSE);
-        pivot2.setDirection(DcMotorSimple.Direction.FORWARD);
+
 
         // Set motor behaviors
-        extension.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivot2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -201,43 +190,18 @@ public class Wheels extends OpMode {
         rightBackDrive.setPower((speed - turn + rotation) * wheelsPower);
 
         // Gamepad 2: Intake control
-        if (gamepad2.a) {
-            intake.setPower(INTAKE_IN_POWER);
-        } else if (gamepad2.b) {
-            intake.setPower(INTAKE_OUT_POWER);
-        } else {
-            intake.setPower(INTAKE_OFF_POWER);
-        }
+
 
         // Gamepad 2: Extension control
-        double extensionPower = 0;
-        if (gamepad2.left_trigger > 0.2) {
-            extensionPower = EXTENSION_OUT_POWER;
-        } else if (gamepad2.left_bumper) {
-            extensionPower = EXTENSION_IN_POWER;
-        }
-        extension.setPower(extensionPower);
 
-        // Gamepad 2: Pivot control without encoders
-        if (gamepad2.right_bumper) {
-            // Move both pivots up
-            pivot.setPower(PIVOT_UP_POWER);                 // Full power for the slow motor (312 RPM)
-            pivot2.setPower(PIVOT_UP_POWER_FAST);           // Scaled power for the fast motor (435 RPM)
-        } else if (gamepad2.right_trigger > 0.2) {
-            // Move both pivots down
-            pivot.setPower(PIVOT_DOWN_POWER);               // Full power for the slow motor
-            pivot2.setPower(PIVOT_DOWN_POWER_FAST);         // Scaled power for the fast motor
-        }
-        else{
-            pivot.setPower(0.1);
-            pivot2.setPower(0.1);
-        }
 
         // Telemetry
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Right Pivot power", pivot.getPower());
-        telemetry.addData("Left Pivot power", pivot2.getPower());
-        telemetry.addData("Extension power", extensionPower);
+        telemetry.addData("power:","volt:"+leftBackDrive.getPower());
+        telemetry.addData("power:","volt:"+leftFrontDrive.getPower());
+
+
+
         telemetry.update();
     }
 
