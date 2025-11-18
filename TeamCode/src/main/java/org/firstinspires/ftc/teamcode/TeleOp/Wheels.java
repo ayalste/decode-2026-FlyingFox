@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.hardware.lynx.commands.core.LynxResetMotorEncoderCommand;
@@ -68,10 +67,10 @@ public class Wheels extends OpMode {
 
 
         // Set motor directions
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
 
 
@@ -97,8 +96,8 @@ public class Wheels extends OpMode {
 
         leftFrontDrive.setPower((speed + turn + rotation) * wheelsPower);
         rightFrontDrive.setPower((speed - turn - rotation) * wheelsPower);
-        leftBackDrive.setPower((speed + turn - rotation) * wheelsPower);
-        rightBackDrive.setPower((speed - turn + rotation) * wheelsPower);
+        leftBackDrive.setPower((speed - turn + rotation) * wheelsPower);
+        rightBackDrive.setPower((speed + turn - rotation) * wheelsPower);
 
         // Gamepad 2: Intake control
 
