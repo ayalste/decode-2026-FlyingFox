@@ -33,6 +33,20 @@ public class basic_auto extends LinearOpMode {
 
         waitForStart();
 
+//        double speed;
+//        double turn;
+//        double rotation;
+//        double wheelsPower = 0.5;
+//
+//        speed = 0.5;
+//        turn = 1.0;
+//        rotation = 0.0;
+//
+//        leftFrontDrive.setPower((speed + turn + rotation) * wheelsPower);
+//        rightFrontDrive.setPower((speed - turn - rotation) * wheelsPower);
+//        leftBackDrive.setPower((speed - turn + rotation) * wheelsPower);
+//        rightBackDrive.setPower((speed + turn - rotation) * wheelsPower);
+
         leftFrontDrive.setTargetPosition(200);
         leftBackDrive.setTargetPosition(200);
         rightFrontDrive.setTargetPosition(200);
