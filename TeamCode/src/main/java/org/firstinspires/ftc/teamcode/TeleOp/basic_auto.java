@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 // ... other necessary imports
 
 @Autonomous
@@ -19,8 +20,10 @@ public class basic_auto extends LinearOpMode {
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
 
         // Reverse one motor to drive straight
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Set motor modes
 //        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -30,20 +33,20 @@ public class basic_auto extends LinearOpMode {
 
         waitForStart();
 
-        leftFrontDrive.setTargetPosition(1000);
-        leftBackDrive.setTargetPosition(1000);
-        rightFrontDrive.setTargetPosition(1000);
-        rightBackDrive.setTargetPosition(1000);
+        leftFrontDrive.setTargetPosition(200);
+        leftBackDrive.setTargetPosition(200);
+        rightFrontDrive.setTargetPosition(200);
+        rightBackDrive.setTargetPosition(200);
 
         leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftFrontDrive.setPower(0.5);
-        leftBackDrive.setPower(0.5);
-        rightFrontDrive.setPower(0.5);
-        rightBackDrive.setPower(0.5);
+        leftFrontDrive.setPower(0.2);
+        leftBackDrive.setPower(0.2);
+        rightFrontDrive.setPower(0.2);
+        rightBackDrive.setPower(0.2);
 
         while (opModeIsActive() && leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy()) {
             // Optional: Add telemetry updates here
