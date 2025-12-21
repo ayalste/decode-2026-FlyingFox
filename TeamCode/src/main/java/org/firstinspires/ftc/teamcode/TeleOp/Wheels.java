@@ -36,6 +36,10 @@ public class Wheels extends OpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
 
+    private CRServo LauncherRightCRServo = null;
+    private CRServo LauncherLeftCRServo = null;
+    private DcMotor LauncherMotor = null;
+
     // End-effector members
 
 
@@ -64,6 +68,10 @@ public class Wheels extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
 
+        LauncherRightCRServo = hardwareMap.get(CRServo.class,"Launcher_Right_CRServo");
+        LauncherLeftCRServo = hardwareMap.get(CRServo.class,"Launcher_Left_CRServo");
+        LauncherMotor = hardwareMap.get(DcMotor.class, "Launcher_Motor");
+
 
 
         // Set motor directions
@@ -71,6 +79,10 @@ public class Wheels extends OpMode {
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+
+        LauncherRightCRServo.setDirection(DcMotorSimple.Direction.FORWARD);
+        LauncherLeftCRServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        LauncherMotor.setDirection(DcMotor.Direction.FORWARD);
 
 
 
@@ -99,8 +111,12 @@ public class Wheels extends OpMode {
         leftBackDrive.setPower((speed - turn + rotation) * wheelsPower);
         rightBackDrive.setPower((speed + turn - rotation) * wheelsPower);
 
-        // Gamepad 2: Intake control
-
+        // Gamepad 2: Launcher control
+        if(gamepad2.right_bumper){
+            LauncherRightCRServo.setPower(1.0);
+            LauncherLeftCRServo.setPower(1.0);
+            LauncherMotor.setPower(1.0);
+        }
 
         // Gamepad 2: Extension control
 
