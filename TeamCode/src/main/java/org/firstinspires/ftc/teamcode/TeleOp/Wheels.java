@@ -80,9 +80,9 @@ public class Wheels extends OpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        LauncherRightCRServo.setDirection(DcMotorSimple.Direction.FORWARD);
-        LauncherLeftCRServo.setDirection(DcMotorSimple.Direction.REVERSE);
-        LauncherMotor.setDirection(DcMotor.Direction.FORWARD);
+        LauncherRightCRServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        LauncherLeftCRServo.setDirection(DcMotorSimple.Direction.FORWARD);
+        LauncherMotor.setDirection(DcMotor.Direction.REVERSE);
 
 
 
@@ -116,6 +116,11 @@ public class Wheels extends OpMode {
             LauncherRightCRServo.setPower(1.0);
             LauncherLeftCRServo.setPower(1.0);
             LauncherMotor.setPower(1.0);
+        }
+        else{
+            LauncherRightCRServo.setPower(0);
+            LauncherLeftCRServo.setPower(0);
+            LauncherMotor.setPower(0);
         }
 
         // Gamepad 2: Extension control
