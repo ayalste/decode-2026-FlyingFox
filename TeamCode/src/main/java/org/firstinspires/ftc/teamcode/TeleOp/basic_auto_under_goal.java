@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Autonomous(name = "Simple Decode Auto", group = "Auto")
-public class basic_auto extends LinearOpMode {
+public class basic_auto_under_goal extends LinearOpMode {
 
     DcMotorEx leftFront, leftBack, rightFront, rightBack;
 
@@ -20,6 +20,8 @@ public class basic_auto extends LinearOpMode {
         rightBack  = hardwareMap.get(DcMotorEx.class, "right_back_drive");
 
         // כיוונים - ייתכן שתצטרך להפוך צד אחד
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        leftBack.setDirection(DcMotor.Direction.FORWARD);
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
 
