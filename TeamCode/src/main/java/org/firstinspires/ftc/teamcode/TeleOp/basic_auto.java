@@ -3,73 +3,65 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-// ... other necessary imports
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@Autonomous
+@Autonomous(name = "Simple Decode Auto", group = "Auto")
 public class basic_auto extends LinearOpMode {
-    private DcMotor leftFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor rightBackDrive = null;
+
+    DcMotorEx leftFront, leftBack, rightFront, rightBack;
+
     @Override
     public void runOpMode() {
-        leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
 
-        // Reverse one motor to drive straight
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        // חיבור מנועים
+        leftFront  = hardwareMap.get(DcMotorEx.class, "left_front_drive");
+        leftBack   = hardwareMap.get(DcMotorEx.class, "left_back_drive");
+        rightFront = hardwareMap.get(DcMotorEx.class, "right_front_drive");
+        rightBack  = hardwareMap.get(DcMotorEx.class, "right_back_drive");
 
-        // Set motor modes
-//        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // כיוונים - ייתכן שתצטרך להפוך צד אחד
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
+
+        telemetry.addLine("Ready for START");
+        telemetry.update();
 
         waitForStart();
 
-//        double speed;
-//        double turn;
-//        double rotation;
-//        double wheelsPower = 0.5;
-//
-//        speed = 0.5;
-//        turn = 1.0;
-//        rotation = 0.0;
-//
-//        leftFrontDrive.setPower((speed + turn + rotation) * wheelsPower);
-//        rightFrontDrive.setPower((speed - turn - rotation) * wheelsPower);
-//        leftBackDrive.setPower((speed - turn + rotation) * wheelsPower);
-//        rightBackDrive.setPower((speed + turn - rotation) * wheelsPower);
+        if (isStopRequested()) return;
 
-        leftFrontDrive.setTargetPosition(200);
-        leftBackDrive.setTargetPosition(200);
-        rightFrontDrive.setTargetPosition(200);
-        rightBackDrive.setTargetPosition(200);
+        // ========= שלב 1: נסיעה ישר =========
+        setAllPower(0.4);
+        sleep(1500); // נוסע 1.5 שניות קדימה
+        stopAll();
 
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        sleep(300);
 
-        leftFrontDrive.setPower(0.2);
-        leftBackDrive.setPower(0.2);
-        rightFrontDrive.setPower(0.2);
-        rightBackDrive.setPower(0.2);
+        // ========= שלב 2: סיבוב 360 =========
+        // צד שמאל קדימה, צד ימין אחורה
+        leftFront.setPower(0.4);
+        leftBack.setPower(0.4);
+        rightFront.setPower(-0.4);
+        rightBack.setPower(-0.4);
 
-        while (opModeIsActive() && leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy()) {
-            // Optional: Add telemetry updates here
-            idle();
-        }
+        sleep(1300); // זמן משוער ל-360°, תוכל לכוון
+        stopAll();
 
-        leftFrontDrive.setPower(0);
-        leftBackDrive.setPower(0);
-        rightFrontDrive.setPower(0);
-        rightBackDrive.setPower(0);
+        // ========= סיום =========
+        telemetry.addLine("Auto Finished");
+        telemetry.update();
+
+        sleep(10000); // נשאר במקום
+    }
+
+    private void setAllPower(double p) {
+        leftFront.setPower(p);
+        leftBack.setPower(p);
+        rightFront.setPower(p);
+        rightBack.setPower(p);
+    }
+
+    private void stopAll() {
+        setAllPower(0);
     }
 }
