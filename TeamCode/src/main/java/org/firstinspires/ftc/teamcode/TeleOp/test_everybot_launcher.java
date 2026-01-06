@@ -43,7 +43,8 @@ public class test_everybot_launcher extends OpMode {
 
 
         // Set motor directions
-        catapult1.setDirection(DcMotor.Direction.FORWARD);
+        catapult1.setDirection(DcMotor.Direction.REVERSE);
+        catapult2.setDirection(DcMotor.Direction.FORWARD);
 
 
 
