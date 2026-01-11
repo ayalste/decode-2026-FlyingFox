@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
-import com.qualcomm.hardware.lynx.commands.core.LynxResetMotorEncoderCommand;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 /*
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -25,8 +21,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="good_wheels", group="Teleop")
-public class Wheels extends OpMode {
+@TeleOp(name="test_everybot_wheels", group="Teleop")
+public class test_everybot_wheels extends OpMode {
     // Declare OpMode members
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -35,10 +31,6 @@ public class Wheels extends OpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
-
-    private CRServo LauncherRightCRServo = null;
-    private CRServo LauncherLeftCRServo = null;
-    private DcMotor LauncherMotor = null;
 
     // End-effector members
 
@@ -68,21 +60,12 @@ public class Wheels extends OpMode {
         rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
         rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
 
-        LauncherRightCRServo = hardwareMap.get(CRServo.class,"Launcher_Right_CRServo");
-        LauncherLeftCRServo = hardwareMap.get(CRServo.class,"Launcher_Left_CRServo");
-        LauncherMotor = hardwareMap.get(DcMotor.class, "Launcher_Motor");
-
-
 
         // Set motor directions
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
         rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
-
-        LauncherRightCRServo.setDirection(DcMotorSimple.Direction.REVERSE);
-        LauncherLeftCRServo.setDirection(DcMotorSimple.Direction.FORWARD);
-        LauncherMotor.setDirection(DcMotor.Direction.REVERSE);
 
 
 
@@ -111,25 +94,10 @@ public class Wheels extends OpMode {
         leftBackDrive.setPower((speed - turn + rotation) * wheelsPower);
         rightBackDrive.setPower((speed + turn - rotation) * wheelsPower);
 
-        // Gamepad 2: Launcher control
-        if(gamepad2.right_bumper){
-            LauncherRightCRServo.setPower(1.0);
-            LauncherLeftCRServo.setPower(1.0);
-            LauncherMotor.setPower(1.0);
-        }
-        else{
-            LauncherRightCRServo.setPower(0);
-            LauncherLeftCRServo.setPower(0);
-            LauncherMotor.setPower(0);
-        }
-
-        // Gamepad 2: Extension control
-
 
         // Telemetry
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("power:","volt:"+leftBackDrive.getPower());
-        telemetry.addData("power:","volt:"+leftFrontDrive.getPower());
+        telemetry.addData("power:","volt:"+leftBackDrive.getPower()+leftFrontDrive.getPower()+rightBackDrive.getPower()+rightFrontDrive.getPower());
 
 
 
