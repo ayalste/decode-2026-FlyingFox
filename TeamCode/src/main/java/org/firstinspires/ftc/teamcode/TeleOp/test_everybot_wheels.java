@@ -7,19 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/*
- * This file contains an example of an iterative (Non-Linear) "OpMode".
- * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
- * The names of OpModes appear on the menu of the FTC Driver Station.
- * When a selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all iterative OpModes contain.
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
- */
 
 @TeleOp(name="test_everybot_wheels", group="Teleop")
 public class test_everybot_wheels extends OpMode {
@@ -32,27 +19,9 @@ public class test_everybot_wheels extends OpMode {
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
 
-    // End-effector members
-
-
-    // Constants
-    private static final double INTAKE_IN_POWER = 1.0;
-    private static final double INTAKE_OUT_POWER = -1.0;
-    private static final double INTAKE_OFF_POWER = 0.0;
-
-    private static final double EXTENSION_OUT_POWER = 1.0;
-    private static final double EXTENSION_IN_POWER = -1.0;
-
-    private static final double PIVOT_UP_POWER = 1.0;        // Full power for the slow motor (312 RPM)
-    private static final double PIVOT_DOWN_POWER = -0.6;    // Example value for downward movement
-    private static final double PIVOT_UP_POWER_FAST = 1;  // Scaled power for 435 RPM motor
-    private static final double PIVOT_DOWN_POWER_FAST = -0.6;
-    private static final double PIVOT_HOLD_POWER = 0.01;        // Power to hold position for the slow motor
-    private static final double PIVOT_HOLD_POWER_FAST =0.01;
 
     @Override
     public void init() {
-        telemetry.addData("Status", "Initializing");
 
         // Initialize hardware
         leftFrontDrive = hardwareMap.get(DcMotor.class, "left_front_drive");
@@ -83,6 +52,7 @@ public class test_everybot_wheels extends OpMode {
 
     @Override
     public void loop() {
+
         // Gamepad 1: Drive control
         double speed = -gamepad1.left_stick_y;
         double turn = gamepad1.right_stick_x;
@@ -105,7 +75,5 @@ public class test_everybot_wheels extends OpMode {
     }
 
     @Override
-    public void stop() {
-        // Add stop logic if needed
-    }
+    public void stop() {}
 }
