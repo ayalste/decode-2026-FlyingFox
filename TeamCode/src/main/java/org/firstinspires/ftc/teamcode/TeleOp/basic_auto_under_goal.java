@@ -46,7 +46,7 @@ public class basic_auto_under_goal extends LinearOpMode {
         rightFront.setPower(-0.4);
         rightBack.setPower(-0.4);
 
-        sleep(1300); // זמן משוער ל-360°, תוכל לכוון
+        sleep(550); // זמן משוער ל-360°, תוכל לכוון
         stopAll();
 
         // ========= סיום =========

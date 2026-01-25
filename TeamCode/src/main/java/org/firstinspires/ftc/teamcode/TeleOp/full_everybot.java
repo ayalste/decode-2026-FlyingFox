@@ -28,6 +28,15 @@ public class full_everybot extends OpMode {
 
     private enum CatapultModes {UP, DOWN, HOLD}
     private full_everybot.CatapultModes pivotMode;
+    private DcMotor foot = null;
+
+    private enum FootModes {UP, DOWN, BRAKE}
+    private FootModes footMode;
+
+    // Foot power values
+    private final double FOOT_UP_POWER = 0.2;
+    private final double FOOT_DOWN_POWER = -1;
+    private final double FOOT_OFF_POWER = 0.0;
 
 
     @Override
@@ -44,6 +53,13 @@ public class full_everybot extends OpMode {
         catapult2 = hardwareMap.get(DcMotor.class, "catapult_motor2");
 
         intakeMotor = hardwareMap.get(DcMotor.class, "intake_Motor");
+
+        // foot:
+        foot = hardwareMap.get(DcMotor.class, "foot");
+
+        foot.setDirection(DcMotor.Direction.REVERSE);
+        foot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
 
         // Set motor directions
@@ -81,6 +97,26 @@ public class full_everybot extends OpMode {
         rightFrontDrive.setPower((speed - turn - rotation) * wheelsPower);
         leftBackDrive.setPower((speed - turn + rotation) * wheelsPower);
         rightBackDrive.setPower((speed + turn - rotation) * wheelsPower);
+        boolean footDownButton = gamepad1.a;
+        boolean footUpButton = gamepad1.b;
+
+        if (footDownButton && footUpButton) {
+            footDownButton = false;
+        }
+
+        if (footDownButton) {
+            footMode = FootModes.DOWN;
+            foot.setPower(FOOT_DOWN_POWER);
+        }
+        else if (footUpButton) {
+            footMode = FootModes.UP;
+            foot.setPower(FOOT_UP_POWER);
+        }
+        else {
+            footMode = FootModes.BRAKE;
+            foot.setPower(FOOT_OFF_POWER);
+        }
+
 
 
         // Gamepad 2: Launcher control
@@ -126,6 +162,9 @@ public class full_everybot extends OpMode {
         telemetry.addData("Drive power:","volt:"+ (Math.abs(leftBackDrive.getPower())+Math.abs(leftFrontDrive.getPower())+Math.abs(rightBackDrive.getPower())+Math.abs(rightFrontDrive.getPower()))/4);
         telemetry.addData("Catapult power:","volt:"+catapult1.getPower());
         telemetry.addData("Intake power:","volt:"+intakeMotor.getPower());
+        telemetry.addData("Foot power", foot.getPower());
+        telemetry.addData("Foot mode", footMode);
+
 
         telemetry.update();
     }
